@@ -1,5 +1,7 @@
 """Diakritika-Entfernung."""
 
+import unicodedata
+
 
 def strip_accents(text: str) -> str:
     """Entfernt diakritische Zeichen (Akzente) aus *text*.
@@ -13,4 +15,8 @@ def strip_accents(text: str) -> str:
     Raises:
         ValueError: Wenn *text* kein String ist.
     """
-    raise NotImplementedError
+    if not isinstance(text, str):
+        raise ValueError("strip_accents erwartet eine Zeichenkette")
+
+    decomposed = unicodedata.normalize("NFD", text)
+    return "".join(char for char in decomposed if unicodedata.category(char) != "Mn")
