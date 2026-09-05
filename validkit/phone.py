@@ -34,6 +34,8 @@ def normalize_phone(text: str, country_code: str) -> str:
         raise ValueError("country_code muss ein String sein")
     if len(text) > MAX_LENGTH:
         raise ValueError("Eingabe überschreitet die Maximallänge")
+    if len(country_code) > MAX_LENGTH:
+        raise ValueError("Ländercode überschreitet die Maximallänge")
     if not _COUNTRY_CODE_RE.fullmatch(country_code):
         raise ValueError("Ländercode muss aus 1 bis 3 Ziffern bestehen")
     digits = _NON_DIGIT_RE.sub("", text).lstrip("0")

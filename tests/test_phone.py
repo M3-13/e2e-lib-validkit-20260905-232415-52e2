@@ -70,6 +70,11 @@ def test_length_over_limit_raises_value_error() -> None:
         normalize_phone("1" * (MAX_LENGTH + 1), "49")
 
 
+def test_country_code_over_limit_raises_value_error() -> None:
+    with pytest.raises(ValueError):
+        normalize_phone("123", "1" * (MAX_LENGTH + 1))
+
+
 def test_error_message_does_not_contain_input() -> None:
     with pytest.raises(ValueError) as exc_info:
         normalize_phone("(030) 123-4567", "x")
