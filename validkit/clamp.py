@@ -14,6 +14,18 @@ def clamp(value: int | float, low: int | float, high: int | float) -> int | floa
         als *high* ist; sonst *value*.
 
     Raises:
-        ValueError: Wenn *low* größer als *high* ist.
+        ValueError: Wenn *low* größer als *high* ist oder ein Argument weder
+            ``int`` noch ``float`` ist.
     """
-    raise NotImplementedError
+    for name, arg in (("value", value), ("low", low), ("high", high)):
+        if isinstance(arg, bool) or not isinstance(arg, (int, float)):
+            raise ValueError(f"{name} must be an int or float")
+
+    if low > high:
+        raise ValueError("low must not be greater than high")
+
+    if value < low:
+        return low
+    if value > high:
+        return high
+    return value
