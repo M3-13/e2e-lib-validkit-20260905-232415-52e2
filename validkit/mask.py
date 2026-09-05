@@ -15,4 +15,14 @@ def mask_secret(text: str, keep: int = 4) -> str:
     Raises:
         ValueError: Wenn *text* kein String ist oder *keep* negativ ist.
     """
-    raise NotImplementedError
+    if not isinstance(text, str):
+        raise ValueError("text muss ein String sein")
+    if not isinstance(keep, int) or isinstance(keep, bool):
+        raise ValueError("keep muss eine ganze Zahl sein")
+    if keep < 0:
+        raise ValueError("keep darf nicht negativ sein")
+    if keep == 0:
+        return "*" * len(text)
+    if keep >= len(text):
+        return text
+    return "*" * (len(text) - keep) + text[-keep:]
